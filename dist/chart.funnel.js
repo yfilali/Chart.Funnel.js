@@ -1,7 +1,7 @@
 /*!
  * Chart.Funnel.js
  * A funnel plugin for Chart.js(http://chartjs.org/)
- * Version: 1.0.2
+ * Version: 1.0.4
  *
  * Copyright 2016 Jone Casaper
  * Released under the MIT license
@@ -64,7 +64,7 @@ module.exports = function(Chart) {
 		hover: {
 			mode: "label"
 		},
-		sort: 'asc',// sort options: 'asc', 'desc'
+		sort: 'asc', // sort options: 'asc', 'desc', false
 		gap: 2,
 		bottomWidth: null,// the bottom width of funnel
 		topWidth: 0, // the top width of funnel
@@ -202,15 +202,19 @@ module.exports = function(Chart) {
 				}
 			});
 			var dwRatio = bottomWidth / dMax,
-				sortedDataAndLabels = valAndLabels.sort(
-					sort === 'asc' ?
-						function (a, b) {
-							return a.val - b.val;
-						} :
-						function (a, b) {
-							return b.val - a.val;
-						}
-				);
+        sortedDataAndLabels = valAndLabels;
+
+      if (sort) {
+        sortedDataAndLabels = valAndLabels.sort(
+          sort === 'asc' ?
+            function (a, b) {
+              return a.val - b.val;
+            } :
+            function (a, b) {
+              return b.val - a.val;
+            }
+        );
+      }
 			// For render hidden view
 			// TODO: optimization....
 			var _viewIndex = 0;
@@ -315,6 +319,7 @@ module.exports = function(Chart) {
 		}
 	});
 };
+
 },{}],4:[function(require,module,exports){
 /**
  *

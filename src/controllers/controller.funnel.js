@@ -33,7 +33,7 @@ module.exports = function(Chart) {
 		hover: {
 			mode: "label"
 		},
-		sort: 'asc',// sort options: 'asc', 'desc'
+		sort: 'asc', // sort options: 'asc', 'desc', false
 		gap: 2,
 		bottomWidth: null,// the bottom width of funnel
 		topWidth: 0, // the top width of funnel
@@ -171,15 +171,19 @@ module.exports = function(Chart) {
 				}
 			});
 			var dwRatio = bottomWidth / dMax,
-				sortedDataAndLabels = valAndLabels.sort(
-					sort === 'asc' ?
-						function (a, b) {
-							return a.val - b.val;
-						} :
-						function (a, b) {
-							return b.val - a.val;
-						}
-				);
+        sortedDataAndLabels = valAndLabels;
+
+      if (sort) {
+        sortedDataAndLabels = valAndLabels.sort(
+          sort === 'asc' ?
+            function (a, b) {
+              return a.val - b.val;
+            } :
+            function (a, b) {
+              return b.val - a.val;
+            }
+        );
+      }
 			// For render hidden view
 			// TODO: optimization....
 			var _viewIndex = 0;
